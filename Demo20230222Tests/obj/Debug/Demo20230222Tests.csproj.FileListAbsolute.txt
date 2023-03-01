@@ -1,0 +1,2 @@
+D:\test\Demo20230222\Demo20230222Tests\obj\Debug\Demo20230222Tests.csproj.AssemblyReference.cache
+D:\test\Demo20230222\Demo20230222Tests\obj\Debug\Demo20230222Tests.csproj.CoreCompileInputs.cache
