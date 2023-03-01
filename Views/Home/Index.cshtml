@@ -1,0 +1,62 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+@*防止 ASP.NET MVC 應用程式中的跨網站偽造要求 (CSRF) 攻擊*@
+@*通常在POST頁面使用, 入口頁(GET)不需要仿冒請求*@
+
+@Html.AntiForgeryToken()
+<div id="EmpData">
+
+</div>
+
+@section Scripts{
+    <script>
+        $(function () {
+            GetEmpData('');
+        });
+        function GetEmpData(EmpNo) {
+            var EmpNo = $('#txtEmpNo').val();
+            $.ajax({
+                type: 'POST',
+                data: {
+                    'EmpNo': EmpNo,
+                    '__RequestVerificationToken': $("input[name*='__RequestVerificationToken']").val()
+                },
+                url: '@Url.Action("_EmpData")',
+                datatype: 'HTML',
+                success: function (r) {
+                    $('#EmpData').html(r);
+                },
+                error: function (a, b, c) {
+                    console.log(a);
+                    console.log(b);
+                    console.log(c);
+                }
+            })
+        }
+            function Delete(EmpNo) {
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("Delete")',
+                data: { 'EmpNo': EmpNo },
+
+                success: function(r) {
+                    if (r.IsSuccess) {
+                        alert('刪除成功');
+                        GetEmpData();
+                    }
+                    else {
+                        alert(r.Msg);
+                    }
+            },
+                error: function (a, b, c) {
+                    console.log(a);
+                    console.log(b);
+                    console.log(c);
+                }
+            })
+        }
+    </script>
+}

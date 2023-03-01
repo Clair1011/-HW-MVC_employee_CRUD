@@ -1,0 +1,43 @@
+﻿@model List<Demo20230222.Models.EmpData>
+
+@*// 失敗的錯誤訊息*@
+@if (!ViewBag.MsgInfo.IsSuccess)
+{
+    <p class="alert alert-danger">@ViewBag.MsgInfo.Msg</p>
+}
+@*// 成功則展開*@
+<br>
+<div class=" input-group mb-3">
+    <input type="text" class="form-control" id="txtEmpNo" placeholder="請輸入查詢電腦編號" aria-label="Recipient's username" aria-describedby="button-addon2">
+    <button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="GetEmpData()">查詢</button>
+</div>
+<br>
+<div>
+    <table class="table table-bordered">
+        <tr>
+            <th>@Html.LabelFor(model => model.FirstOrDefault().EmpNo)</th>
+            <th>@Html.LabelFor(model => model.FirstOrDefault().Name)</th>
+            <th>@Html.LabelFor(model => model.FirstOrDefault().Ext)</th>
+            <th>功能</th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.EmpNo</td>
+                <td>@item.Name</td>
+                <td>@item.Ext</td>
+
+                <td>
+                    <a href="@Url.Action("Edit", new {item.EmpNo})" class="btn btn-warning">編輯</a>
+
+                    <input type="button" value="刪除" class="btn btn-danger" onclick="Delete('@item.EmpNo')" />
+                
+                </td>
+                 
+            </tr>
+        }
+    </table>
+</div>
+
+
+
